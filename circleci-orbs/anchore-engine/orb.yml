@@ -113,7 +113,7 @@ commands:
         type: string
         default: "/home/circleci/project/.circleci/.anchore/policy_bundle.json"
       policy_failure:
-        description: Set to True if pipeline should stop on a failed policy evaluation.
+        description: Set to True if pipeline should stop on policy evaluation status 'fail'.
         type: boolean
         default: False
       image_name:
@@ -206,7 +206,7 @@ commands:
         description: Name of the image to be evaluated
         type: string
       policy_failure:
-        description: Set to True if pipeline should stop on a failed policy evaluation.
+        description: Set to True if pipeline should stop on policy evaluation status 'fail'.
         type: boolean
         default: False
       policy_bundle_file_path:
@@ -364,7 +364,7 @@ jobs:
         type: string
         default: "/home/circleci/project/.circleci/.anchore/policy_bundle.json"
       policy_failure:
-        description: Set to True if pipeline should stop on a failed policy evaluation.
+        description: Set to True if pipeline should stop on policy evaluation status 'fail'.
         type: boolean
         default: False
       image_name:

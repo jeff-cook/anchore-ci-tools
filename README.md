@@ -63,6 +63,7 @@ jobs:
       - anchore/analyze_local_image:
           image_name: ${CIRCLE_PROJECT_REPONAME}:ci
           timeout: '500'
+      - anchore/parse_reports
 ```
 
 Put a custom policy bundle in to your repo at .circleci/.anchore/policy_bundle.json
@@ -83,3 +84,4 @@ jobs:
           image_name: ${CIRCLE_PROJECT_REPONAME}:ci
           timeout: '500'
           policy_failure: True
+      - anchore/parse_reports

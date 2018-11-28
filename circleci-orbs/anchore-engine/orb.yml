@@ -61,6 +61,7 @@ examples:
             - anchore/analyze_local_image:
                 image_name: ${CIRCLE_PROJECT_REPONAME}:ci
                 timeout: '500'
+            - anchore/parse_reports
 
 executors:
   anchore_engine:

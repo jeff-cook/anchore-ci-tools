@@ -25,17 +25,17 @@ jobs:
             image_name: ${CIRCLE_PROJECT_REPONAME}:ci
             policy_failure: True
 
-    custom_policy_pass:
-      local_image_scan:
-        executor: anchore/anchore_engine
-        steps:
-          - checkout
-          - run:
-              name: build container
-              command: docker build -t ${CIRCLE_PROJECT_REPONAME}:ci -f .circleci/node_critical_pass/Dockerfile .circleci/node_critical_pass/
-          - anchore/analyze_local_image:
-              image_name: ${CIRCLE_PROJECT_REPONAME}:ci
-              policy_failure: True
+  custom_policy_pass:
+    local_image_scan:
+      executor: anchore/anchore_engine
+      steps:
+        - checkout
+        - run:
+            name: build container
+            command: docker build -t ${CIRCLE_PROJECT_REPONAME}:ci -f .circleci/node_critical_pass/Dockerfile .circleci/node_critical_pass/
+        - anchore/analyze_local_image:
+            image_name: ${CIRCLE_PROJECT_REPONAME}:ci
+            policy_failure: True
 
   publish_dev_orb:
     docker:
@@ -52,6 +52,8 @@ jobs:
 workflows:
   scan_image:
     jobs:
+      - custom_policy_fail
+      - custom_policy_pass
       - local_image_scan
       - anchore/image_scan:
           image_name: 'anchore/anchore-engine:latest'

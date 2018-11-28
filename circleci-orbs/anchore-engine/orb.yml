@@ -216,11 +216,11 @@ commands:
       - run:
           name: Evaluate image against desired policy bundle.
           command: |
-            (anchore-cli --json policy add << parameters.policy_bundle_file_path >> | jq '.policyId' | xargs anchore-cli policy activate) &> /dev/null || printf "\n%s\n" "No custom policy bundle found at << parameters.policy_bundle_file_path >> - using default policy bundle"
+            (anchore-cli --json policy add << parameters.policy_bundle_file_path >> | jq '.policyId' | xargs anchore-cli policy activate) || printf "\n%s\n" "No custom policy bundle found at << parameters.policy_bundle_file_path >> - using default policy bundle"
             if << parameters.policy_failure >>; then
-              anchore-cli evaluate check << parameters.image_name >>
+              anchore-cli evaluate check << parameters.image_name >> --detail
             else
-              (set +o pipefail; anchore-cli evaluate check << parameters.image_name >> | tee /dev/null)
+              (set +o pipefail; anchore-cli evaluate check << parameters.image_name >> --detail | tee /dev/null)
             fi
 
   setup_anchore_engine:
@@ -390,6 +390,7 @@ jobs:
         type: string
         default: "300"
     steps:
+      - checkout
       - install_tools
       - setup_anchore_engine
       - when:

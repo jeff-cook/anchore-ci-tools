@@ -200,7 +200,8 @@ commands:
   policy_evaluation:
     description: |
       Perform policy evaluation using Anchore Engine image analysis. A customized policy bundle can be utilized for evaluation.
-      Custom policy bundles should be added to your repo at .circleci/.anchore/policy_bundle.json
+      Custom policy bundles should be added to your repo at .circleci/.anchore/policy_bundle.json. If using multiple policy
+      bundles, or if using executor other than anchore/anchore_engine a custom policy bundle path can be set as a parameter.
     parameters:
       image_name:
         description: Name of the image to be evaluated

@@ -223,7 +223,7 @@ commands:
           name: Evaluate image against desired policy bundle.
           command: |
             (anchore-cli --json policy add << parameters.policy_bundle_file_path >> | jq '.policyId' | xargs anchore-cli policy activate) &> /dev/null || \
-              printf "\n%s\n" "Custom policy bundle not found - << parameters.policy_bundle_file_path >> - using default policy bundle"
+              printf "\n%s\n" "Custom policy bundle not found - << parameters.policy_bundle_file_path >> - using default policy bundle."
             if << parameters.policy_failure >>; then
               anchore-cli evaluate check << parameters.image_name >> --detail
             else
@@ -244,7 +244,7 @@ commands:
           name: Create anchore engine configuration files.
           command: |
             mkdir config db
-            cat \<< EOF \>> config/config.yaml
+            cat \<< EOF > config/config.yaml
             # Anchore Service Configuration File
             log_level: 'INFO'
             cleanup_images: True
@@ -319,12 +319,12 @@ commands:
                   feed_sync_checker: 3600
             EOF
 
-            cat \<< EOF \>> docker-compose.yaml
+            cat \<< EOF > docker-compose.yaml
             # Anchore engine docker-compose configuration.
             version: '2'
             services:
               anchore-engine:
-                image: docker.io/anchore/anchore-engine:v0.3.0
+                image: "docker.io/anchore/anchore-engine:v0.3.0"
                 depends_on:
                  - anchore-db
                 ports:
@@ -337,7 +337,7 @@ commands:
                  options:
                   max-size: 100m
               anchore-db:
-                image: "anchore/engine-db-preload:v0.3.0"
+                image: "docker.io/anchore/engine-db-preload:v0.3.0"
                 volumes:
                  - ./db:/var/lib/postgresql/data/pgdata/:z
                 environment:
